@@ -3,6 +3,8 @@ import sqlite3
 from datetime import datetime
 import os
 
+print("Database path in Flask:", os.path.abspath("mobile_legends_register_form.db"))
+
 app = Flask(__name__)
 
 # Database connection function
@@ -131,9 +133,13 @@ def register():
 
         cursor.execute(insert_query, (name, email, squad_name, squad_id, phone, state, event_name, registration_time))
         conn.commit()
+
+        # ✅ **Forcing SQLite to write changes to disk immediately**
+        conn.execute("PRAGMA wal_checkpoint(TRUNCATE);")  # Ensures all writes are flushed
+        conn.close()
+
         print("Data committed successfully!")
 
-        conn.close()
         return jsonify({"success": True, "message": "Registration successful! We will contact you on WhatsApp shortly."})
 
     except sqlite3.Error as e:
