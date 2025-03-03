@@ -110,4 +110,5 @@ def register():
         return jsonify({"success": False, "message": "Registration failed due to an unexpected error. Please try again later."})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run()
+
