@@ -88,6 +88,11 @@ def about_me():
 @app.route("/register", methods=["POST"])
 def register():
     data = request.get_json()
+    print("Received data:", data)  # Debugging line to check incoming request
+
+    if not data:
+        return jsonify({"success": False, "message": "No data received"}), 400  # Handle empty request
+
     name = data.get("name")
     email = data.get("email")
     squad_name = data.get("squad_name")
@@ -117,23 +122,26 @@ def register():
             conn.close()
             return jsonify({"success": False, "message": "Registration full for this event. Try another event."})
 
-        # Insert new registration
-        cursor.execute("""
+        # Insert new registration and print query
+        insert_query = """
         INSERT INTO registrations (name, email, squad_name, squad_id, phone, state, event_name, registration_time)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        """, (name, email, squad_name, squad_id, phone, state, event_name, registration_time))
+        """
+        print("Executing SQL:", insert_query, (name, email, squad_name, squad_id, phone, state, event_name, registration_time))
 
+        cursor.execute(insert_query, (name, email, squad_name, squad_id, phone, state, event_name, registration_time))
         conn.commit()
-        conn.close()
+        print("Data committed successfully!")
 
+        conn.close()
         return jsonify({"success": True, "message": "Registration successful! We will contact you on WhatsApp shortly."})
 
     except sqlite3.Error as e:
-        print(f"Database error: {e}")
-        return jsonify({"success": False, "message": "Registration failed due to a database error. Please try again later."})
+        print(f"Database error: {e}")  # Debugging line to catch database errors
+        return jsonify({"success": False, "message": f"Database error: {e}"})
     except Exception as e:
-        print(f"Unexpected error: {e}")
-        return jsonify({"success": False, "message": "Registration failed due to an unexpected error. Please try again later."})
+        print(f"Unexpected error: {e}")  # Debugging line to catch unexpected errors
+        return jsonify({"success": False, "message": f"Unexpected error: {e}"})
 
 # Route to view registered users (for debugging)
 @app.route("/registrations", methods=["GET"])
@@ -145,10 +153,14 @@ def view_registrations():
         registrations = cursor.fetchall()
         conn.close()
 
+        print("Fetched registrations from DB:", registrations)  # Debugging line
+
         if not registrations:
             return jsonify({"success": False, "message": "No registrations found."})
 
-        data = [dict(row) for row in registrations]
+        data = [dict(row) for row in registrations]  # This might be causing issues
+        print("Converted data for API response:", data)  # Debugging line
+
         return jsonify({"success": True, "registrations": data})
 
     except sqlite3.Error as e:
