@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NEXUSHUB</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/index.css') }}"
+    />
+  </head>
+  <body>
+    <div class="navbar">
+      <i class="fas fa-bars menu-icon" onclick="toggleMenu()"></i>
+      <h1 id="heading-glow">NEXUSHUB</h1>
+    </div>
+
+    <div class="sidebar" id="sidebar">
+      <div class="dropdown">
+        <button class="dropbtn" onclick="toggleDropdown()">
+          Select Game <i class="fas fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="dropdownContent">
+          <a href="{{url_for('index')}}">Mobile Legends (Sq Vs Sq)</a>
+        </div>
+      </div>
+      <a href="{{url_for('view_matches')}}">View Matches</a>
+      <a href="{{url_for('about_me')}}">About Me</a>
+    </div>
+
+    <div class="about-me">
+      <div class="profile-card">
+        <img
+          src="{{ url_for('static', filename='img/profile.jpg') }}"
+          alt="Profile Picture"
+          class="profile-pic"
+        />
+        <p>
+          I am a passionate developer currently pursuing my BCA at St. Joseph
+          University, Chumu. I am deeply engaged in exploring the world of
+          technology and esports. I created this website to unite gamers and
+          provide them with an opportunity to earn money through their gaming
+          skills.
+        </p>
+        <p>Contact: 7896063170</p>
+        <div class="social-links">
+          <a href="https://github.com/yourprofile" target="_blank"
+            ><i class="fab fa-github"></i
+          ></a>
+          <a href="https://twitter.com/yourprofile" target="_blank"
+            ><i class="fab fa-twitter"></i
+          ></a>
+          <a href="https://linkedin.com/in/yourprofile" target="_blank"
+            ><i class="fab fa-linkedin"></i
+          ></a>
+        </div>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+  </body>
+</html>

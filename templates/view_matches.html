@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NEXUSHUB</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/index.css') }}"
+    />
+  </head>
+  <body>
+    <div class="navbar">
+      <i class="fas fa-bars menu-icon" onclick="toggleMenu()"></i>
+      <h1 id="heading-glow">NEXUSHUB</h1>
+    </div>
+
+    <div class="sidebar" id="sidebar">
+      <div class="dropdown">
+        <button class="dropbtn" onclick="toggleDropdown()">
+          Select Game <i class="fas fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="dropdownContent">
+          <a href="{{url_for('index')}}">Mobile Legends (Sq Vs Sq)</a>
+        </div>
+      </div>
+      <a href="{{url_for('view_matches')}}">View Matches</a>
+      <a href="{{url_for('about_me')}}">About Me</a>
+    </div>
+
+    <div class="game">
+      <!-- Game Card (manually added) -->
+      <div class="game-card">
+        <div class="content">
+          <img
+            style="border-radius: 10px"
+            src="{{ url_for('static', filename='img/game.jpg') }}"
+            alt="Game Image"
+          />
+          <h2 style="margin-top: 10px">Squad Showdown: Season 1</h2>
+          <p>Date of Match: _th March, Match Starting Time: 09:00AM </p>
+        </div>
+        <div style="margin-bottom: 15px" class="buttons">
+          <!-- <button>
+            <a
+              href="https://www.youtube.com/@nexushub-c1q?si=GHaiQmrRiuLjAPOf"
+              target="_blank"
+              style="list-style: none; color: white; text-decoration: none"
+              >Watch Now</a
+            >
+          </button> -->
+          <button>
+            <a
+              href="{{ url_for('static', filename='img/bracket-generator.jpeg') }}"
+              target="_blank"
+              style="list-style: none; color: white; text-decoration: none"
+              >Tournament Bracket</a
+            >
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript to check for game cards -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Check if there are any game cards
+        const gameCards = document.querySelectorAll(".game-card");
+        const gameContainer = document.querySelector(".game");
+
+        if (gameCards.length === 0) {
+          // If no game cards are found, display a message
+          const noTournamentMessage = document.createElement("p");
+          noTournamentMessage.textContent = "No matches to view.";
+          noTournamentMessage.style.textAlign = "center";
+          noTournamentMessage.style.marginTop = "20px";
+          gameContainer.appendChild(noTournamentMessage);
+        }
+      });
+    </script>
+
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+  </body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NEXUSHUB</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/index.css') }}"
+    />
+  </head>
+  <body>
+    <div class="navbar">
+      <i class="fas fa-bars menu-icon" onclick="toggleMenu()"></i>
+      <h1 id="heading-glow">NEXUSHUB</h1>
+    </div>
+
+    <div class="sidebar" id="sidebar">
+      <div class="dropdown">
+        <button class="dropbtn" onclick="toggleDropdown()">
+          Select Game <i class="fas fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="dropdownContent">
+          <a href="{{url_for('index')}}">Mobile Legends (Sq Vs Sq)</a>
+        </div>
+      </div>
+      <a href="{{url_for('view_matches')}}">View Matches</a>
+      <a href="{{url_for('about_me')}}">About Me</a>
+    </div>
+
+    <div class="game">
+      {% if cards %} {% for card in cards %}
+      <div class="game-card">
+        <img
+          src="{{ url_for('static', filename='img/game.jpg') }}"
+          alt="Game Image"
+        />
+        <div class="content">
+          <h2 id="Card_Head">{{ card['Card_Head'] }}</h2>
+          <p id="Card_Para">{{ card['Card_Para'] }}</p>
+        </div>
+        <div class="buttons">
+          <button onclick="registerModal(event)">Register Now</button>
+          <button onclick="showModal(`{{ card['Modal_Para'] }}`)">
+            Show More Details
+          </button>
+        </div>
+      </div>
+      {% endfor %} {% else %}
+      <p>No tournament available.</p>
+      {% endif %}
+
+      <!-- Game Details Modal -->
+      <div id="detailsModal" class="modal">
+        <div class="modal-content">
+          <h2>Game Details</h2>
+          <p id="Modal_Para"></p>
+          <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
+      </div>
+
+      <!-- Sign-Up Modal -->
+      <div id="registerModal" class="modal">
+        <div class="modal-content">
+          <h2>Register Now</h2>
+          <form id="registerForm">
+            <input type="text" id="name" placeholder="Name" required />
+            <input type="email" id="email" placeholder="Email" required />
+            <input
+              type="text"
+              id="squad_name"
+              placeholder="Squad Name"
+              required
+            />
+            <input
+              type="number"
+              id="squadid"
+              placeholder="Your Squad ID"
+              required
+            />
+            <input
+              type="tel"
+              id="phone"
+              placeholder="Phone Number (WhatsApp)"
+              required
+            />
+            <select id="state" required>
+              <option value="">Select State</option>
+              <option value="Nagaland">Nagaland</option>
+              <option value="Delhi">Delhi</option>
+              <option value="Goa">Goa</option>
+            </select>
+            <button type="submit">Submit</button>
+          </form>
+          <button class="close-btn" onclick="closeSignUpModal()">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+  </body>
+</html>

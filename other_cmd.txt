@@ -1,0 +1,2 @@
+eog 1740534754960.png (View Img)
+scp /home/kalongba/Downloads/logo.png kalongba@192.168.43.231:/home/kalongba/Desktop/NexusHub_Flask/static/img (Copy Img from physical to server)
